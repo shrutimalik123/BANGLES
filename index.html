@@ -13,12 +13,7 @@
     <!-- Background YouTube Video -->
     <div class="video-background">
         <div class="video-foreground">
-            <iframe id="bg-video" 
-                src="https://www.youtube.com/embed/QHdajZktFEU?autoplay=1&mute=1&loop=1&playlist=QHdajZktFEU&controls=0&showinfo=0&modestbranding=1" 
-                frameborder="0" 
-                allow="autoplay; encrypted-media" 
-                allowfullscreen>
-            </iframe>
+            <div id="bg-video"></div>
         </div>
         <!-- Color overlay to ensure text readability while maintaining vibe -->
         <div class="overlay"></div>
@@ -72,30 +67,49 @@
         </footer>
     </main>
 
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        let player;
+        let isMuted = true;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('bg-video', {
+                videoId: 'QHdajZktFEU',
+                playerVars: {
+                    'autoplay': 1,
+                    'mute': 1,
+                    'controls': 0,
+                    'showinfo': 0,
+                    'modestbranding': 1,
+                    'loop': 1,
+                    'playlist': 'QHdajZktFEU',
+                    'playsinline': 1 // essential for iOS
+                },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Unmute button functionality
             const unmuteBtn = document.getElementById('unmute-btn');
-            const iframe = document.getElementById('bg-video');
-            let isMuted = true;
-            
             unmuteBtn.addEventListener('click', () => {
-                if(isMuted) {
-                    // Quickest hack to unmute a YT iframe from an embed link (reload with mute=0)
-                    // Sometimes modern browsers still block autoplay with audio unless user clicked, but the button IS a user click!
-                    const currentSrc = iframe.src;
-                    iframe.src = currentSrc.replace('mute=1', 'mute=0');
+                if (isMuted) {
+                    player.unMute();
+                    // iOS sometimes requires playVideo to be called synchronously on user action
+                    player.playVideo(); 
                     unmuteBtn.innerHTML = '🔊 Playing...';
                     unmuteBtn.classList.add('playing');
                     isMuted = false;
                 } else {
-                    const currentSrc = iframe.src;
-                    iframe.src = currentSrc.replace('mute=0', 'mute=1');
+                    player.mute();
                     unmuteBtn.innerHTML = '🎵 Tap to Play Music';
                     unmuteBtn.classList.remove('playing');
                     isMuted = true;
                 }
             });
-        });
+        }
     </script>
 </body>
 </html>
