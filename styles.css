@@ -1,0 +1,252 @@
+:root {
+    --primary: #FF2E93; /* Vibrant bright pink */
+    --secondary: #FF8A00; /* Warm marigold orange */
+    --accent: #FFD700; /* Gold */
+    --dark: #2D0A16;
+    --light: #FFF0F5;
+    --glass-bg: rgba(255, 255, 255, 0.15);
+    --glass-border: rgba(255, 255, 255, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    color: var(--light);
+    background-color: var(--dark);
+    overflow-x: hidden;
+}
+
+/* YouTube Background Setup */
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+    background: #000;
+}
+
+.video-foreground,
+.video-background iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 100vh;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+@media (min-aspect-ratio: 16/9) {
+    .video-foreground { height: 300%; top: -100%; }
+}
+
+@media (max-aspect-ratio: 16/9) {
+    .video-foreground { width: 300%; left: -100%; }
+}
+
+/* Gradient Overlay to make content pop and add the "colorful vibe" */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Bright pink to deep maroon gradient with some opacity */
+    background: linear-gradient(135deg, rgba(255, 46, 147, 0.7) 0%, rgba(255, 138, 0, 0.6) 50%, rgba(45, 10, 22, 0.9) 100%);
+    z-index: 1;
+}
+
+/* Main Content Overlay */
+.content {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+header {
+    text-align: center;
+    margin-top: 5vh;
+    margin-bottom: 4rem;
+    animation: slideDown 1s ease-out;
+}
+
+.badge {
+    display: inline-block;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 15px rgba(255, 46, 147, 0.4);
+    border: 1px solid var(--accent);
+}
+
+h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 20px rgba(0,0,0,0.5);
+    background: linear-gradient(to right, #FFF, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.amp {
+    font-family: 'Outfit', sans-serif;
+    font-style: normal;
+    color: var(--primary);
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: unset;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    font-weight: 300;
+    letter-spacing: 1px;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.glass-button {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    color: white;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.glass-button:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3);
+}
+
+.glass-button.playing {
+    background: rgba(255, 46, 147, 0.4);
+    border-color: var(--primary);
+}
+
+/* Glassmorphism Gallery Cards */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 4rem;
+}
+
+.card {
+    background: var(--glass-bg);
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    padding: 1rem;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+    opacity: 0;
+    animation: fadeUp 0.8s ease-out forwards;
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: var(--accent);
+    box-shadow: 0 15px 40px rgba(255, 46, 147, 0.4);
+}
+
+.card-1 { animation-delay: 0.2s; }
+.card-2 { animation-delay: 0.4s; }
+.card-3 { animation-delay: 0.6s; }
+
+.image-wrapper {
+    width: 100%;
+    height: 250px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    border: 2px solid transparent;
+    transition: border 0.3s ease;
+}
+
+.card:hover .image-wrapper {
+    border-color: var(--accent);
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+}
+
+.card:hover .image-wrapper img {
+    transform: scale(1.1);
+}
+
+.card-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent);
+    font-family: 'Playfair Display', serif;
+}
+
+.card-content p {
+    font-size: 1rem;
+    line-height: 1.5;
+    opacity: 0.85;
+}
+
+footer {
+    margin-top: auto;
+    padding-top: 2rem;
+    text-align: center;
+    font-weight: 300;
+    opacity: 0.7;
+}
+
+/* Animations */
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .content { padding: 1rem; }
+    .gallery { gap: 1.5rem; }
+}

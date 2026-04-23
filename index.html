@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bridal Bangles & Beats - Chuda Magic</title>
+    <meta name="description" content="A vibrant and beautiful showcase of ethnic Indian bridal bangles with energetic Sanju Rathod music in the background.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Background YouTube Video -->
+    <div class="video-background">
+        <div class="video-foreground">
+            <iframe id="bg-video" 
+                src="https://www.youtube.com/embed/QHdajZktFEU?autoplay=1&mute=1&loop=1&playlist=QHdajZktFEU&controls=0&showinfo=0&modestbranding=1" 
+                frameborder="0" 
+                allow="autoplay; encrypted-media" 
+                allowfullscreen>
+            </iframe>
+        </div>
+        <!-- Color overlay to ensure text readability while maintaining vibe -->
+        <div class="overlay"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="content">
+        <header>
+            <div class="badge">Shagun</div>
+            <h1>Bangles <span class="amp">&</span> Beats</h1>
+            <p class="subtitle">A Vibrant Celebration of Bridal Chuda</p>
+            <button id="unmute-btn" class="glass-button">
+                🎵 Tap to Play Music
+            </button>
+        </header>
+
+        <section class="gallery">
+            <div class="card card-1">
+                <div class="image-wrapper">
+                    <img src="images/bangles_one.png" alt="Vibrant ethnic Indian bridal bangles in red and gold">
+                </div>
+                <div class="card-content">
+                    <h2>Radiant Red</h2>
+                    <p>Beautiful festive lighting highlighting the intricate golden details of the bridal chuda.</p>
+                </div>
+            </div>
+
+            <div class="card card-2">
+                <div class="image-wrapper">
+                    <img src="images/bangles_two.png" alt="Colorful glass and metal Indian bangles">
+                </div>
+                <div class="card-content">
+                    <h2>Neon Festivity</h2>
+                    <p>Stacked glass and metal bangles in a burst of joyful, vibrant pastel colors.</p>
+                </div>
+            </div>
+
+            <div class="card card-3">
+                <div class="image-wrapper">
+                    <img src="images/bangles_three.png" alt="Traditional Indian bride's hands with heavy chuda">
+                </div>
+                <div class="card-content">
+                    <h2>Bridal Elegance</h2>
+                    <p>The traditional ornate beauty of a bride's hands adorned with bright pink and red bangles.</p>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>Made with ❤️ to celebrate ethnic Indian culture</p>
+        </footer>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const unmuteBtn = document.getElementById('unmute-btn');
+            const iframe = document.getElementById('bg-video');
+            let isMuted = true;
+            
+            unmuteBtn.addEventListener('click', () => {
+                if(isMuted) {
+                    // Quickest hack to unmute a YT iframe from an embed link (reload with mute=0)
+                    // Sometimes modern browsers still block autoplay with audio unless user clicked, but the button IS a user click!
+                    const currentSrc = iframe.src;
+                    iframe.src = currentSrc.replace('mute=1', 'mute=0');
+                    unmuteBtn.innerHTML = '🔊 Playing...';
+                    unmuteBtn.classList.add('playing');
+                    isMuted = false;
+                } else {
+                    const currentSrc = iframe.src;
+                    iframe.src = currentSrc.replace('mute=0', 'mute=1');
+                    unmuteBtn.innerHTML = '🎵 Tap to Play Music';
+                    unmuteBtn.classList.remove('playing');
+                    isMuted = true;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
